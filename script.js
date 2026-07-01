@@ -424,55 +424,32 @@ function renderStudentCharts() {
 // ====================================================
 
 let currentUser = null;
-let currentRole = "siswa";
 
-function switchLoginTab(role) {
-    currentRole = role;
-    document.getElementById("tab-siswa").className = role === "siswa" ? "login-tab active" : "login-tab";
-    document.getElementById("tab-admin").className = role === "admin" ? "login-tab active" : "login-tab";
-    
-    const preset = document.getElementById("login-preset");
-    const presetDesc = document.getElementById("preset-desc");
-    if (role === "siswa") {
-        presetDesc.innerHTML = "Siswa (siswa / siswa123)";
-    } else {
-        presetDesc.innerHTML = "Admin (admin / 123456)";
-    }
-}
-
-function quickFillLogin() {
-    const userField = document.getElementById("username");
-    const passField = document.getElementById("password");
-    if (currentRole === "siswa") {
-        userField.value = "siswa";
-        passField.value = "siswa123";
-    } else {
-        userField.value = "admin";
-        passField.value = "123456";
-    }
-}
-
-function handleLogin(event) {
+function handleSiswaLogin(event) {
     event.preventDefault();
-    const userField = document.getElementById("username").value.trim();
-    const passField = document.getElementById("password").value;
+    const userField = document.getElementById("siswa-username").value.trim();
+    const passField = document.getElementById("siswa-password").value;
     
-    if (currentRole === "admin") {
-        if (userField === "admin" && passField === "123456") {
-            currentUser = { username: "admin", name: "Administrator Bimbel", role: "admin" };
-            showShell();
-            showToast("Login Administrator Sukses!", "success");
-        } else {
-            showToast("Username atau Password Admin salah!", "danger");
-        }
+    if (userField === "siswa" && passField === "siswa123") {
+        currentUser = { username: "siswa", name: db.profile.name, role: "siswa" };
+        showShell();
+        showToast(`Selamat datang kembali, ${db.profile.name}!`, "success");
     } else {
-        if (userField === "siswa" && passField === "siswa123") {
-            currentUser = { username: "siswa", name: db.profile.name, role: "siswa" };
-            showShell();
-            showToast(`Selamat datang kembali, ${db.profile.name}!`, "success");
-        } else {
-            showToast("Username atau Password Siswa salah!", "danger");
-        }
+        showToast("Username atau Password Siswa salah!", "danger");
+    }
+}
+
+function handleAdminLogin(event) {
+    event.preventDefault();
+    const userField = document.getElementById("admin-username").value.trim();
+    const passField = document.getElementById("admin-password").value;
+    
+    if (userField === "admin" && passField === "123456") {
+        currentUser = { username: "admin", name: "Administrator Bimbel", role: "admin" };
+        showShell();
+        showToast("Login Administrator Sukses!", "success");
+    } else {
+        showToast("Username atau Password Admin salah!", "danger");
     }
 }
 
@@ -489,8 +466,10 @@ function handleLogout() {
             currentUser = null;
             document.getElementById("app-shell").style.display = "none";
             document.getElementById("landing-view").style.display = "flex";
-            document.getElementById("username").value = "";
-            document.getElementById("password").value = "";
+            document.getElementById("siswa-username").value = "";
+            document.getElementById("siswa-password").value = "";
+            document.getElementById("admin-username").value = "";
+            document.getElementById("admin-password").value = "";
             showToast("Sesi login berakhir.", "info");
         }
     });
