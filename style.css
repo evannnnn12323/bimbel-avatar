@@ -349,20 +349,10 @@ img {
     z-index: 10;
 }
 
-.login-wrapper {
-    display: flex;
-    gap: 30px;
-    width: 100%;
-    max-width: 900px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
 .login-card {
-    flex: 1;
-    min-width: 300px;
-    max-width: 420px;
-    padding: 35px;
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
     border-radius: var(--radius-lg);
 }
 
