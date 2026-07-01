@@ -124,38 +124,26 @@ const DEFAULT_DB = {
         { name: "Dodi Prasetyo", score: 60 }
     ],
     profile: {
-        name: "Siswa Avatar",
-        className: "Kelas 12 MIPA",
-        school: "SMA Cendrawasih",
-        email: "siswa@avatar.com",
-        phone: "081234567890",
+        name: "",
+        className: "",
+        school: "",
+        email: "",
+        phone: "",
         avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
         favorites: [],
         completedMateri: [],
-        targets: [
-            { id: "tar-1", text: "Selesaikan bab 1 Aljabar Linear", checked: false },
-            { id: "tar-2", text: "Kerjakan Latihan Soal Fisika Dasar", checked: true },
-            { id: "tar-3", text: "Ikuti Try Out UTBK Mandiri Pertama", checked: false }
-        ]
+        targets: []
     },
-    grades: [
-        { id: "gr-1", quizType: "Latihan (Matematika)", score: 85, date: "2026-06-28" },
-        { id: "gr-2", quizType: "Latihan (Fisika)", score: 100, date: "2026-06-29" }
-    ],
+    grades: [],
     attendance: [],
-    activityLogs: [
-        { time: "2026-07-01 09:15", name: "Siswa Avatar", activity: "Presensi Masuk", details: "Check-in pukul 09:15" },
-        { time: "2026-07-01 10:30", name: "Siswa Avatar", activity: "Mengerjakan Kuis", details: "Latihan Fisika (Skor: 100)" }
-    ],
-    chats: [
-        { sender: "teacher", receiver: "siswa", text: "Halo! Selamat datang di Bimbel Avatar. Ada materi yang membingungkan hari ini?", time: "09:00" }
-    ]
+    activityLogs: [],
+    chats: []
 };
 
 // Database local persistence helper
 let db = {};
 function initDatabase() {
-    const localData = localStorage.getItem("bimbel_avatar_db");
+    const localData = localStorage.getItem("bimbel_avatar_db_v3");
     if (!localData) {
         db = JSON.parse(JSON.stringify(DEFAULT_DB));
         saveDatabase();
@@ -185,7 +173,7 @@ function initDatabase() {
                     bab: "Bab 1",
                     subbab: "Notasi Ilmiah dan Operasi Akar",
                     desc: "Memahami konsep bilangan berpangkat, sifat-sifat perpangkatan, dan operasi hitung bentuk akar.",
-                    content: `<h3>A. Bilangan Berpangkat (Eksponen)</h3><p>Bilangan berpangkat adalah perkalian berulang dari suatu bilangan yang sama. Jika a adalah bilangan riil dan n adalah bilangan bulat positif, maka: <strong>a^n = a &times; a &times; a &times; ... &times; a</strong> (sebanyak n kali).</p><h4>Sifat-Sifat Perpangkatan:</h4><ul><li>a^m &times; a^n = a^(m+n)</li><li>a^m / a^n = a^(m-n)</li><li>(a^m)^n = a^(m&times;n)</li><li>(a &times; b)^n = a^n &times; b^n</li></ul><h3>B. Bentuk Akar</h3><p>Bentuk akar merupakan akar dari suatu bilangan rasional yang hasilnya berupa bilangan irasional. Operasi bentuk akar meliputi perkalian, pembagian, penjumlahan, dan pengurangan dengan menyamakan bilangan di dalam akar.</p>`,
+                    content: `<h3>A. Bilangan Berpangkat (Eksponen)</h3><p>Bilangan berpangkat adalah perkalian berulang dari suatu bilangan yang sama. Jika a adalah bilangan riil and n adalah bilangan bulat positif, maka: <strong>a^n = a &times; a &times; a &times; ... &times; a</strong> (sebanyak n kali).</p><h4>Sifat-Sifat Perpangkatan:</h4><ul><li>a^m &times; a^n = a^(m+n)</li><li>a^m / a^n = a^(m-n)</li><li>(a^m)^n = a^(m&times;n)</li><li>(a &times; b)^n = a^n &times; b^n</li></ul><h3>B. Bentuk Akar</h3><p>Bentuk akar merupakan akar dari suatu bilangan rasional yang hasilnya berupa bilangan irasional. Operasi bentuk akar meliputi perkalian, pembagian, penjumlahan, dan pengurangan dengan menyamakan bilangan di dalam akar.</p>`,
                     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
                     pdfName: "modul-matematika-kalkulus.pdf",
                     status: "Publish"
@@ -260,7 +248,7 @@ function initDatabase() {
                     category: "Latihan",
                     subject: "Matematika Kelas 9",
                     type: "IS",
-                    text: "Berapakah volume tabung (dalam cm3) jika jari-jari alasnya 7 cm dan tingginya 10 cm? (Gunakan pi = 22/7)",
+                    text: "Berapakah volume tabung (dalam cm3) jika jari-jari alasnya 7 cm and tingginya 10 cm? (Gunakan pi = 22/7)",
                     options: [],
                     answer: "1540",
                     explanation: "Volume tabung = pi \u00d7 r^2 \u00d7 t = (22/7) \u00d7 7 \u00d7 7 \u00d7 10 = 22 \u00d7 7 \u00d7 10 = 154 \u00d7 10 = 1540 cm3."
@@ -338,8 +326,9 @@ function initDatabase() {
 }
 
 function saveDatabase() {
-    localStorage.setItem("bimbel_avatar_db", JSON.stringify(db));
+    localStorage.setItem("bimbel_avatar_db_v3", JSON.stringify(db));
 }
+
 
 // ====================================================
 //         2. SYSTEM SETUP (THEMING & UTILS)
