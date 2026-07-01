@@ -144,7 +144,7 @@ const DEFAULT_DB = {
 // Database local persistence helper
 let db = {};
 function initDatabase() {
-    const localData = localStorage.getItem("bimbel_avatar_db_v4");
+    const localData = localStorage.getItem("bimbel_avatar_db_v5");
     if (!localData) {
         db = JSON.parse(JSON.stringify(DEFAULT_DB));
         saveDatabase();
@@ -168,13 +168,13 @@ function initDatabase() {
             const newMaterials = [
                 {
                     id: "mat-9-1",
-                    title: "Perpangkatan dan Bentuk Akar (Semester 1)",
+                    title: "Sistem Persamaan Linear Dua Variabel / SPLDV (Semester 1)",
                     subject: "Matematika Kelas 9",
                     className: "Kelas 9",
                     bab: "Bab 1",
-                    subbab: "Notasi Ilmiah dan Operasi Akar",
-                    desc: "Memahami konsep bilangan berpangkat, sifat-sifat perpangkatan, dan operasi hitung bentuk akar.",
-                    content: `<h3>A. Bilangan Berpangkat (Eksponen)</h3><p>Bilangan berpangkat adalah perkalian berulang dari suatu bilangan yang sama. Jika a adalah bilangan riil and n adalah bilangan bulat positif, maka: <strong>a^n = a &times; a &times; a &times; ... &times; a</strong> (sebanyak n kali).</p><h4>Sifat-Sifat Perpangkatan:</h4><ul><li>a^m &times; a^n = a^(m+n)</li><li>a^m / a^n = a^(m-n)</li><li>(a^m)^n = a^(m&times;n)</li><li>(a &times; b)^n = a^n &times; b^n</li></ul><h3>B. Bentuk Akar</h3><p>Bentuk akar merupakan akar dari suatu bilangan rasional yang hasilnya berupa bilangan irasional. Operasi bentuk akar meliputi perkalian, pembagian, penjumlahan, dan pengurangan dengan menyamakan bilangan di dalam akar.</p>`,
+                    subbab: "Metode Penyelesaian SPLDV",
+                    desc: "Memahami konsep persamaan linear dua variabel dan metode penyelesaian sistem persamaannya.",
+                    content: `<h3>A. Pengertian SPLDV</h3><p>Sistem Persamaan Linear Dua Variabel (SPLDV) adalah sekumpulan persamaan linear yang memiliki dua variabel (biasanya x dan y) yang saling berhubungan dan memiliki satu penyelesaian unik. Bentuk umumnya:</p><p><strong>ax + by = c</strong><br><strong>dx + ey = f</strong></p><h3>B. Metode Penyelesaian</h3><ul><li><strong>Metode Eliminasi:</strong> Menghilangkan salah satu variabel dengan menyamakan koefisiennya lalu mengurangkan atau menjumlahkan kedua persamaan.</li><li><strong>Metode Substitusi:</strong> Menyatakan salah satu variabel dalam bentuk variabel lain dari satu persamaan, kemudian memasukkannya ke persamaan lainnya.</li><li><strong>Metode Campuran:</strong> Menggabungkan metode eliminasi untuk mencari nilai variabel pertama dan substitusi untuk variabel kedua.</li><li><strong>Metode Grafik:</strong> Menggambar garis dari kedua persamaan pada koordinat Kartesius. Titik potong kedua garis merupakan penyelesaiannya.</li></ul>`,
                     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
                     pdfName: "modul-matematika-kalkulus.pdf",
                     status: "Publish"
@@ -230,20 +230,20 @@ function initDatabase() {
                     category: "Latihan",
                     subject: "Matematika Kelas 9",
                     type: "PG",
-                    text: "Berapakah hasil dari ((2^4 * 2^3) : 2^5)?",
-                    options: ["2", "4", "8", "16"],
+                    text: "Tentukan nilai x yang memenuhi sistem persamaan linear x + y = 5 dan x - y = 1.",
+                    options: ["2", "3", "4", "5"],
                     answer: "B",
-                    explanation: "Menggunakan sifat perpangkatan: (2^4 * 2^3) : 2^5 = 2^(4+3) : 2^5 = 2^7 : 2^5 = 2^(7-5) = 2^2 = 4."
+                    explanation: "Jumlahkan kedua persamaan: (x + y) + (x - y) = 5 + 1 => 2x = 6 => x = 3. Jadi, nilai x yang memenuhi adalah 3."
                 },
                 {
                     id: "q-m9-2",
                     category: "Latihan",
                     subject: "Matematika Kelas 9",
                     type: "PG",
-                    text: "Sederhanakan bentuk akar berikut: √48 + 2√27 - √12.",
-                    options: ["6√3", "8√3", "10√3", "12√3"],
+                    text: "Harga 2 buku dan 3 pensil adalah Rp 12.000, sedangkan harga 1 buku dan 2 pensil adalah Rp 7.000. Berapakah harga 1 buku?",
+                    options: ["Rp 2.000", "Rp 3.000", "Rp 4.000", "Rp 5.000"],
                     answer: "B",
-                    explanation: "√48 = 4√3, 2√27 = 2 * 3√3 = 6√3, √12 = 2√3. Maka: 4√3 + 6√3 - 2√3 = 8√3."
+                    explanation: "Misalkan buku = x dan pensil = y. Persamaannya: (1) 2x + 3y = 12.000, (2) x + 2y = 7.000. Dari (2) didapat x = 7.000 - 2y. Substitusikan ke (1): 2(7.000 - 2y) + 3y = 12.000 => 14.000 - 4y + 3y = 12.000 => -y = -2.000 => y = 2.000. Maka x = 7.000 - 2(2.000) = 3.000. Harga 1 buku adalah Rp 3.000."
                 },
                 {
                     id: "q-m9-3",
@@ -382,10 +382,10 @@ function initDatabase() {
                     category: "TryOut",
                     subject: "Ulangan Harian Matematika Kelas 9",
                     type: "PG",
-                    text: "Bentuk sederhana dari akar kuadrat √72 adalah...",
-                    options: ["3√8", "6√2", "2√18", "4√3"],
-                    answer: "B",
-                    explanation: "√72 = √(36 \u00d7 2) = √36 \u00d7 √2 = 6√2."
+                    text: "Himpunan penyelesaian dari sistem persamaan linear 2x - y = 4 dan x + y = 5 adalah...",
+                    options: ["{(3, 2)}", "{(2, 3)}", "{(4, 1)}", "{(1, 4)}"],
+                    answer: "A",
+                    explanation: "Jumlahkan kedua persamaan: (2x - y) + (x + y) = 4 + 5 => 3x = 9 => x = 3. Substitusikan x = 3 ke persamaan kedua: 3 + y = 5 => y = 2. Jadi, himpunan penyelesaiannya adalah {(3, 2)}."
                 },
                 {
                     id: "q-m9-to2",
@@ -450,7 +450,7 @@ function initDatabase() {
 }
 
 function saveDatabase() {
-    localStorage.setItem("bimbel_avatar_db_v4", JSON.stringify(db));
+    localStorage.setItem("bimbel_avatar_db_v5", JSON.stringify(db));
 }
 
 
