@@ -282,6 +282,41 @@
                                 </table>
                             </div>
                         </div>
+                </section>
+                
+                <!-- ========================================== -->
+                <!--               ADMIN MENTOR VIEW            -->
+                <!-- ========================================== -->
+                <section id="admin-mentor-view" class="view-section">
+                    <div class="page-header">
+                        <div>
+                            <h2 class="page-title">Kelola Mentor / Pengajar</h2>
+                            <p class="page-subtitle">Atur data mentor yang mengajar mata pelajaran bimbingan</p>
+                        </div>
+                    </div>
+                    
+                    <div class="table-card glass-panel" style="margin-top: 20px;">
+                        <div class="table-header">
+                            <h3 class="chart-title" style="margin-bottom:0;">Daftar Mentor Aktif</h3>
+                            <button class="btn btn-primary" onclick="openAddMentorModal()">
+                                <i class="fa-solid fa-plus"></i> Tambah Mentor
+                            </button>
+                        </div>
+                        <div class="table-wrapper">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 80px;">Inisial</th>
+                                        <th>Nama Mentor</th>
+                                        <th>Spesialis Pelajaran</th>
+                                        <th style="width: 150px; text-align: center;">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-mentor-table-body">
+                                    <!-- Dynamic Mentor List -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </section>
                 

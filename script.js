@@ -137,7 +137,8 @@ const DEFAULT_DB = {
     grades: [],
     attendance: [],
     activityLogs: [],
-    chats: []
+    chats: [],
+    mentors: []
 };
 
 // Database local persistence helper
@@ -661,6 +662,9 @@ function navigateTo(viewId) {
     if (viewId === "admin-kelas-mapel-view") {
         renderKelasMapelTables();
     }
+    if (viewId === "admin-mentor-view") {
+        renderAdminMentorTable();
+    }
     if (viewId === "admin-jadwal-pengumuman-view") {
         renderJadwalPengumumanTables();
     }
@@ -722,6 +726,9 @@ function showShell() {
             </li>
             <li class="sidebar-link" onclick="navigateTo('admin-kelas-mapel-view')">
                 <i class="fa-solid fa-school"></i> Kelas & Mapel
+            </li>
+            <li class="sidebar-link" onclick="navigateTo('admin-mentor-view')">
+                <i class="fa-solid fa-chalkboard-user"></i> Kelola Mentor
             </li>
             <li class="sidebar-link" onclick="navigateTo('admin-jadwal-pengumuman-view')">
                 <i class="fa-solid fa-calendar-alt"></i> Jadwal & Info
@@ -1362,6 +1369,124 @@ function renderAdminSiswaTables() {
             `;
         });
     }
+}
+
+function renderAdminMentorTable() {
+    const tbody = document.getElementById("admin-mentor-table-body");
+    tbody.innerHTML = "";
+    
+    if (!db.mentors || db.mentors.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:20px;">Belum ada mentor aktif. Silakan tambahkan mentor baru.</td></tr>`;
+        return;
+    }
+    
+    db.mentors.forEach(m => {
+        tbody.innerHTML += `
+            <tr>
+                <td><div class="chat-channel-avatar" style="margin:0 auto; width:36px; height:36px; font-size:0.9rem; display:flex; align-items:center; justify-content:center; border-radius:50%; background:var(--primary-glow); color:var(--primary); font-weight:700;">${m.initials}</div></td>
+                <td style="font-weight:600; color:var(--text-primary);">${m.name}</td>
+                <td><span class="badge badge-info" style="background:var(--primary-glow); color:var(--primary); border:1px solid var(--primary); padding:4px 8px; border-radius:4px; font-size:0.75rem;">${m.subject}</span></td>
+                <td>
+                    <div style="display:flex; gap:10px; justify-content:center;">
+                        <button class="btn btn-primary btn-xs btn-secondary" style="padding:4px 8px;" onclick="editMentor('${m.id}')">
+                            <i class="fa-solid fa-edit"></i> Edit
+                        </button>
+                        <button class="btn btn-danger btn-xs" style="padding:4px 8px; background:var(--danger); border-color:var(--danger);" onclick="deleteMentor('${m.id}')">
+                            <i class="fa-solid fa-trash"></i> Hapus
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+function openAddMentorModal() {
+    Swal.fire({
+        title: 'Tambah Mentor Baru',
+        html:
+            '<input id="swal-mentor-name" class="swal2-input" placeholder="Nama Mentor">' +
+            '<input id="swal-mentor-subject" class="swal2-input" placeholder="Mata Pelajaran (misal: Matematika)">',
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: 'Simpan',
+        cancelButtonText: 'Batal',
+        preConfirm: () => {
+            const name = document.getElementById('swal-mentor-name').value.trim();
+            const subject = document.getElementById('swal-mentor-subject').value.trim();
+            if (!name || !subject) {
+                Swal.showValidationMessage('Harap lengkapi semua kolom!');
+            }
+            return { name: name, subject: subject };
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const newMentor = {
+                id: "men-" + Date.now(),
+                name: result.value.name,
+                subject: result.value.subject,
+                initials: result.value.name.split(" ").map(w => w[0]).join("").toUpperCase().substring(0, 2)
+            };
+            if (!db.mentors) db.mentors = [];
+            db.mentors.push(newMentor);
+            saveDatabase();
+            renderAdminMentorTable();
+            showToast("Mentor berhasil ditambahkan!", "success");
+        }
+    });
+}
+
+function editMentor(id) {
+    const mentor = db.mentors.find(m => m.id === id);
+    if (!mentor) return;
+    
+    Swal.fire({
+        title: 'Edit Data Mentor',
+        html:
+            `<input id="swal-mentor-name" class="swal2-input" placeholder="Nama Mentor" value="${mentor.name}">` +
+            `<input id="swal-mentor-subject" class="swal2-input" placeholder="Mata Pelajaran" value="${mentor.subject}">`,
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: 'Simpan Perubahan',
+        cancelButtonText: 'Batal',
+        preConfirm: () => {
+            const name = document.getElementById('swal-mentor-name').value.trim();
+            const subject = document.getElementById('swal-mentor-subject').value.trim();
+            if (!name || !subject) {
+                Swal.showValidationMessage('Harap lengkapi semua kolom!');
+            }
+            return { name: name, subject: subject };
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            mentor.name = result.value.name;
+            mentor.subject = result.value.subject;
+            mentor.initials = result.value.name.split(" ").map(w => w[0]).join("").toUpperCase().substring(0, 2);
+            saveDatabase();
+            renderAdminMentorTable();
+            showToast("Data mentor berhasil diperbarui!", "success");
+        }
+    });
+}
+
+function deleteMentor(id) {
+    Swal.fire({
+        title: 'Hapus Mentor?',
+        text: "Semua obrolan terkait dengan mentor ini juga akan hilang.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            db.mentors = db.mentors.filter(m => m.id !== id);
+            db.chats = db.chats.filter(c => c.sender !== id && c.receiver !== id);
+            saveDatabase();
+            renderAdminMentorTable();
+            showToast("Mentor berhasil dihapus.", "info");
+        }
+    });
 }
 
 
@@ -2337,19 +2462,27 @@ function handleAttendance(action) {
 //         8. CHAT CLIENT SIMULATOR
 // ====================================================
 
-const MENTORS = [
-    { id: "men-1", name: "Kak Adi", subject: "Matematika", initials: "KA" },
-    { id: "men-2", name: "Kak Ririn", subject: "Fisika/Kimia", initials: "KR" },
-    { id: "men-3", name: "Kak Dina", subject: "Bahasa Inggris", initials: "KD" }
-];
-
-let activeMentorId = "men-1";
+let activeMentorId = "";
 
 function initSiswaChatView() {
     const sidebar = document.getElementById("chat-channel-list");
     sidebar.innerHTML = "";
     
-    MENTORS.forEach(m => {
+    if (!db.mentors || db.mentors.length === 0) {
+        sidebar.innerHTML = `<div style="padding:15px; text-align:center; color:var(--text-muted); font-size:0.8rem;">Belum ada mentor aktif.</div>`;
+        document.getElementById("active-chat-avatar").innerText = "?";
+        document.getElementById("active-chat-name").innerText = "Tidak ada mentor aktif";
+        document.getElementById("chat-messages-container").innerHTML = `<div style="padding:40px; text-align:center; color:var(--text-muted); font-size:0.85rem;">Hubungi admin untuk menambahkan mentor baru di panel Kelola Mentor.</div>`;
+        return;
+    }
+    
+    // Pick active mentor
+    const isValidActive = db.mentors.some(m => m.id === activeMentorId);
+    if (!isValidActive) {
+        activeMentorId = db.mentors[0].id;
+    }
+    
+    db.mentors.forEach(m => {
         const activeClass = m.id === activeMentorId ? "active" : "";
         sidebar.innerHTML += `
             <div class="chat-channel-item ${activeClass}" onclick="switchChatMentor('${m.id}')">
@@ -2371,7 +2504,8 @@ function switchChatMentor(id) {
 }
 
 function updateChatPanel() {
-    const activeMentor = MENTORS.find(m => m.id === activeMentorId);
+    if (!db.mentors || db.mentors.length === 0) return;
+    const activeMentor = db.mentors.find(m => m.id === activeMentorId);
     if (!activeMentor) return;
     
     document.getElementById("active-chat-avatar").innerText = activeMentor.initials;
@@ -2381,15 +2515,26 @@ function updateChatPanel() {
     const container = document.getElementById("chat-messages-container");
     container.innerHTML = "";
     
-    db.chats.forEach(msg => {
-        const senderClass = msg.sender === "siswa" ? "student" : "teacher";
-        container.innerHTML += `
-            <div class="chat-bubble ${senderClass}">
-                <div>${msg.text}</div>
-                <div class="chat-bubble-time">${msg.time}</div>
-            </div>
-        `;
-    });
+    const relevantChats = db.chats.filter(c => 
+        (c.sender === "siswa" && c.receiver === activeMentorId) ||
+        (c.sender === activeMentorId && c.receiver === "siswa")
+    );
+    
+    if (relevantChats.length === 0) {
+        container.innerHTML = `<div style="padding:40px 20px; text-align:center; color:var(--text-muted); font-size:0.85rem;">
+            Belum ada percakapan. Mulailah menyapa ${activeMentor.name}!
+        </div>`;
+    } else {
+        relevantChats.forEach(msg => {
+            const senderClass = msg.sender === "siswa" ? "student" : "teacher";
+            container.innerHTML += `
+                <div class="chat-bubble ${senderClass}">
+                    <div>${msg.text}</div>
+                    <div class="chat-bubble-time">${msg.time}</div>
+                </div>
+            `;
+        });
+    }
     
     // Scroll to bottom
     container.scrollTop = container.scrollHeight;
@@ -2404,7 +2549,7 @@ function handleChatKeyPress(event) {
 function sendChatMessage() {
     const input = document.getElementById("chat-message-input");
     const text = input.value.trim();
-    if (!text) return;
+    if (!text || !db.mentors || db.mentors.length === 0) return;
     
     const now = new Date();
     const timeStr = String(now.getHours()).padStart(2, '0') + ":" + String(now.getMinutes()).padStart(2, '0');
@@ -2423,19 +2568,22 @@ function sendChatMessage() {
     
     // Simulate Mentor automatic response
     setTimeout(() => {
-        let reply = "Halo! Terima kasih atas pertanyaannya. Kakak sedang membaca chatmu dan akan segera merespon ya.";
+        const activeMentor = db.mentors.find(m => m.id === activeMentorId);
+        if (!activeMentor) return;
+        
+        let reply = `Halo! Terima kasih atas pertanyaannya terkait ${activeMentor.subject}. Kakak akan segera membantumu ya!`;
         const lowerText = text.toLowerCase();
         
         if (lowerText.includes("halo") || lowerText.includes("permisi")) {
-            reply = "Halo! Selamat belajar. Ada materi atau kuis yang ingin didiskusikan hari ini?";
+            reply = `Halo! Saya ${activeMentor.name}, mentor ${activeMentor.subject} Anda. Ada materi atau kuis yang ingin didiskusikan hari ini?`;
         } else if (lowerText.includes("tanya") || lowerText.includes("soal") || lowerText.includes("susah")) {
-            reply = "Tentu! Silakan tulis detail soal atau materi bab mana yang membingungkan agar Kakak bisa bantu jelaskan ya.";
+            reply = "Tentu! Silakan tulis detail soal atau materi bab mana yang membingungkan agar Kakak bisa bantu coret-coret dan jelaskan.";
         } else if (lowerText.includes("try out") || lowerText.includes("tryout") || lowerText.includes("utbk")) {
-            reply = "Untuk kuis Try Out, kamu bisa mengerjakannya di tab Try Out. Pastikan koneksimu stabil ya!";
+            reply = "Untuk kuis Try Out, silakan klik menu Try Out di sidebar kiri. Kerjakan dengan teliti ya!";
         }
         
         db.chats.push({
-            sender: "teacher",
+            sender: activeMentorId,
             receiver: "siswa",
             text: reply,
             time: timeStr
