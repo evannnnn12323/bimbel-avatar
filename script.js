@@ -4,8 +4,8 @@
 
 // Mock Database Structure
 const DEFAULT_DB = {
-    classes: ["Kelas 10 MIPA", "Kelas 11 MIPA", "Kelas 12 MIPA"],
-    subjects: ["Matematika", "Fisika", "Kimia", "Biologi", "Bahasa Inggris", "Bahasa Indonesia"],
+    classes: ["Kelas 9", "Kelas 10 MIPA", "Kelas 11 MIPA", "Kelas 12 MIPA"],
+    subjects: ["Matematika Kelas 9", "Matematika", "Fisika", "Kimia", "Biologi", "Bahasa Inggris", "Bahasa Indonesia"],
     materi: [], // Admin will add materials manually
     schedules: [
         { id: "sch-1", dayTime: "Senin, 14:00 - 15:30", subject: "Matematika", room: "Ruang Avatar 1" },
@@ -114,7 +114,8 @@ const DEFAULT_DB = {
         }
     ],
     tryouts: [
-        { id: "to-1", name: "Try Out UTBK Mandiri", duration: 15, questionsCount: 5 }
+        { id: "to-1", name: "Try Out UTBK Mandiri", duration: 15, questionsCount: 5 },
+        { id: "to-2", name: "Ulangan Harian Matematika Kelas 9", duration: 20, questionsCount: 5 }
     ],
     leaderboard: [
         { name: "Adi Wijaya", score: 95 },
@@ -166,6 +167,172 @@ function initDatabase() {
                 db[key] = JSON.parse(JSON.stringify(DEFAULT_DB[key]));
             }
         }
+        
+        // Seeding Matematika Kelas 9 Kurikulum Merdeka if not present
+        if (!db.subjects.includes("Matematika Kelas 9")) {
+            db.subjects.push("Matematika Kelas 9");
+            if (!db.classes.includes("Kelas 9")) {
+                db.classes.push("Kelas 9");
+            }
+            
+            // Seed new materials
+            const newMaterials = [
+                {
+                    id: "mat-9-1",
+                    title: "Perpangkatan dan Bentuk Akar (Semester 1)",
+                    subject: "Matematika Kelas 9",
+                    className: "Kelas 9",
+                    bab: "Bab 1",
+                    subbab: "Notasi Ilmiah dan Operasi Akar",
+                    desc: "Memahami konsep bilangan berpangkat, sifat-sifat perpangkatan, dan operasi hitung bentuk akar.",
+                    content: `<h3>A. Bilangan Berpangkat (Eksponen)</h3><p>Bilangan berpangkat adalah perkalian berulang dari suatu bilangan yang sama. Jika a adalah bilangan riil dan n adalah bilangan bulat positif, maka: <strong>a^n = a &times; a &times; a &times; ... &times; a</strong> (sebanyak n kali).</p><h4>Sifat-Sifat Perpangkatan:</h4><ul><li>a^m &times; a^n = a^(m+n)</li><li>a^m / a^n = a^(m-n)</li><li>(a^m)^n = a^(m&times;n)</li><li>(a &times; b)^n = a^n &times; b^n</li></ul><h3>B. Bentuk Akar</h3><p>Bentuk akar merupakan akar dari suatu bilangan rasional yang hasilnya berupa bilangan irasional. Operasi bentuk akar meliputi perkalian, pembagian, penjumlahan, dan pengurangan dengan menyamakan bilangan di dalam akar.</p>`,
+                    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                    pdfName: "modul-matematika-kalkulus.pdf",
+                    status: "Publish"
+                },
+                {
+                    id: "mat-9-2",
+                    title: "Persamaan Kuadrat (Semester 1)",
+                    subject: "Matematika Kelas 9",
+                    className: "Kelas 9",
+                    bab: "Bab 2",
+                    subbab: "Menentukan Akar-akar Persamaan Kuadrat",
+                    desc: "Metode pemfaktoran, melengkapkan kuadrat sempurna, dan rumus ABC untuk menyelesaikan persamaan kuadrat.",
+                    content: `<h3>Persamaan Kuadrat</h3><p>Persamaan kuadrat adalah suatu persamaan berderajat dua dengan bentuk umum: <strong>ax^2 + bx + c = 0</strong>, dengan a &ne; 0.</p><h4>Metode Penyelesaian:</h4><ol><li><strong>Pemfaktoran:</strong> Mengubah ax^2 + bx + c = 0 menjadi bentuk perkalian dua faktor linear (x - x1)(x - x2) = 0.</li><li><strong>Rumus ABC:</strong> Menggunakan rumus kuadratik x = (-b &plusmn; &radic;(b^2 - 4ac)) / 2a.</li></ol>`,
+                    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                    pdfName: "modul-matematika-kalkulus.pdf",
+                    status: "Publish"
+                },
+                {
+                    id: "mat-9-3",
+                    title: "Kesebangunan dan Kekongruenan (Semester 2)",
+                    subject: "Matematika Kelas 9",
+                    className: "Kelas 9",
+                    bab: "Bab 4",
+                    subbab: "Syarat Segitiga Sebangun dan Kongruen",
+                    desc: "Mengidentifikasi kekongruenan dan kesebangunan bangun datar khususnya segitiga.",
+                    content: `<h3>Kesebangunan vs Kekongruenan</h3><p><strong>Kongruen:</strong> Dua atau lebih bangun datar yang memiliki bentuk dan ukuran yang sama persis (sisi bersesuaian sama panjang, sudut bersesuaian sama besar).</p><p><strong>Sebangun:</strong> Dua atau lebih bangun datar yang memiliki bentuk yang sama, namun ukurannya berbeda dengan perbandingan sisi-sisi yang bersesuaian senilai.</p>`,
+                    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                    pdfName: "modul-matematika-kalkulus.pdf",
+                    status: "Publish"
+                },
+                {
+                    id: "mat-9-4",
+                    title: "Bangun Ruang Sisi Lengkung (Semester 2)",
+                    subject: "Matematika Kelas 9",
+                    className: "Kelas 9",
+                    bab: "Bab 5",
+                    subbab: "Volume dan Luas Permukaan Tabung",
+                    desc: "Menghitung volume dan luas selimut tabung, kerucut, dan bola dalam kehidupan sehari-hari.",
+                    content: `<h3>Rumus Tabung, Kerucut, dan Bola</h3><h4>1. Tabung (Cylinder)</h4><ul><li>Volume = &pi; &times; r^2 &times; t</li><li>Luas Permukaan = 2 &pi; r (r + t)</li></ul><h4>2. Kerucut (Cone)</h4><ul><li>Volume = 1/3 &times; &pi; &times; r^2 &times; t</li><li>Luas Permukaan = &pi; r (r + s) di mana s adalah garis pelukis</li></ul><h4>3. Bola (Sphere)</h4><ul><li>Volume = 4/3 &times; &pi; &times; r^3</li><li>Luas Permukaan = 4 &pi; r^2</li></ul>`,
+                    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                    pdfName: "modul-matematika-kalkulus.pdf",
+                    status: "Publish"
+                }
+            ];
+            
+            db.materi = db.materi.concat(newMaterials);
+            
+            // Seed new questions
+            const newQuestions = [
+                {
+                    id: "q-m9-1",
+                    category: "Latihan",
+                    subject: "Matematika Kelas 9",
+                    type: "PG",
+                    text: "Berapakah hasil dari 2^3 \u00d7 2^2?",
+                    options: ["12", "16", "32", "64"],
+                    answer: "C",
+                    explanation: "Berdasarkan sifat perpangkatan, a^m \u00d7 a^n = a^(m+n). Jadi, 2^3 \u00d7 2^2 = 2^(3+2) = 2^5 = 32."
+                },
+                {
+                    id: "q-m9-2",
+                    category: "Latihan",
+                    subject: "Matematika Kelas 9",
+                    type: "BS",
+                    text: "Persamaan kuadrat x^2 - 9 = 0 memiliki dua akar real yaitu x = 3 dan x = -3.",
+                    options: ["Benar", "Salah"],
+                    answer: "A",
+                    explanation: "x^2 - 9 = 0 \u21d2 x^2 = 9 \u21d2 x = \u00b1\u221a9 \u21d2 x = 3 atau x = -3. Pernyataan tersebut BENAR."
+                },
+                {
+                    id: "q-m9-3",
+                    category: "Latihan",
+                    subject: "Matematika Kelas 9",
+                    type: "IS",
+                    text: "Berapakah volume tabung (dalam cm3) jika jari-jari alasnya 7 cm dan tingginya 10 cm? (Gunakan pi = 22/7)",
+                    options: [],
+                    answer: "1540",
+                    explanation: "Volume tabung = pi \u00d7 r^2 \u00d7 t = (22/7) \u00d7 7 \u00d7 7 \u00d7 10 = 22 \u00d7 7 \u00d7 10 = 154 \u00d7 10 = 1540 cm3."
+                },
+                {
+                    id: "q-m9-4",
+                    category: "TryOut",
+                    subject: "Ulangan Harian Matematika Kelas 9",
+                    type: "PG",
+                    text: "Bentuk sederhana dari akar kuadrat \u221a72 adalah...",
+                    options: ["3\u221a8", "6\u221a2", "2\u221a18", "4\u221a3"],
+                    answer: "B",
+                    explanation: "\u221a72 = \u221a(36 \u00d7 2) = \u221a36 \u00d7 \u221a2 = 6\u221a2."
+                },
+                {
+                    id: "q-m9-5",
+                    category: "TryOut",
+                    subject: "Ulangan Harian Matematika Kelas 9",
+                    type: "PG",
+                    text: "Akar-akar dari persamaan kuadrat x^2 - 5x + 6 = 0 adalah...",
+                    options: ["2 dan 3", "-2 dan -3", "1 dan 6", "-1 dan -6"],
+                    answer: "A",
+                    explanation: "Faktorkan persamaan: x^2 - 5x + 6 = (x - 2)(x - 3) = 0. Jadi, x = 2 atau x = 3."
+                },
+                {
+                    id: "q-m9-6",
+                    category: "TryOut",
+                    subject: "Ulangan Harian Matematika Kelas 9",
+                    type: "PG",
+                    text: "Dua segitiga dikatakan kongruen (sama dan sebangun) jika memenuhi syarat berikut...",
+                    options: [
+                        "Sudut-sudut bersesuaian sama besar saja",
+                        "Sisi-sisi bersesuaian sama panjang & sudut bersesuaian sama besar",
+                        "Perbandingan panjang sisi bersesuaian sama",
+                        "Luas wilayahnya sama walaupun bentuknya berbeda"
+                    ],
+                    answer: "B",
+                    explanation: "Dua bangun dikatakan kongruen jika memiliki bentuk dan ukuran yang sama. Syaratnya adalah sisi bersesuaian sama panjang dan sudut bersesuaian sama besar."
+                },
+                {
+                    id: "q-m9-7",
+                    category: "TryOut",
+                    subject: "Ulangan Harian Matematika Kelas 9",
+                    type: "PG",
+                    text: "Apakah rumus luas selimut kerucut adalah L = pi \u00d7 r \u00d7 s?",
+                    options: ["Benar", "Salah"],
+                    answer: "A",
+                    explanation: "Luas selimut kerucut dirumuskan dengan L = pi \u00d7 r \u00d7 s, di mana r adalah jari-jari alas dan s adalah garis pelukis kerucut."
+                },
+                {
+                    id: "q-m9-8",
+                    category: "TryOut",
+                    subject: "Ulangan Harian Matematika Kelas 9",
+                    type: "IS",
+                    text: "Berapakah volume sebuah kerucut (dalam cm3) jika memiliki tinggi kerucut 12 cm dan jari-jari alasnya 7 cm? (Gunakan pi = 22/7)",
+                    options: [],
+                    answer: "616",
+                    explanation: "Volume kerucut = 1/3 \u00d7 pi \u00d7 r^2 \u00d7 t = 1/3 \u00d7 (22/7) \u00d7 7 \u00d7 7 \u00d7 12 = 1/3 \u00d7 154 \u00d7 12 = 154 \u00d7 4 = 616 cm3."
+                }
+            ];
+            
+            db.questions = db.questions.concat(newQuestions);
+            
+            // Seed tryout
+            db.tryouts.push({
+                id: "to-2",
+                name: "Ulangan Harian Matematika Kelas 9",
+                duration: 20,
+                questionsCount: 5
+            });
+        }
+        
         saveDatabase();
     }
 }
