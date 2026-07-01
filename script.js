@@ -144,7 +144,7 @@ const DEFAULT_DB = {
 // Database local persistence helper
 let db = {};
 function initDatabase() {
-    const localData = localStorage.getItem("bimbel_avatar_db_v3");
+    const localData = localStorage.getItem("bimbel_avatar_db_v4");
     if (!localData) {
         db = JSON.parse(JSON.stringify(DEFAULT_DB));
         saveDatabase();
@@ -224,48 +224,171 @@ function initDatabase() {
             
             // Seed new questions
             const newQuestions = [
+                // === LATIHAN MATEMATIKA KELAS 9 (15 SOAL) ===
                 {
                     id: "q-m9-1",
                     category: "Latihan",
                     subject: "Matematika Kelas 9",
                     type: "PG",
-                    text: "Berapakah hasil dari 2^3 \u00d7 2^2?",
-                    options: ["12", "16", "32", "64"],
-                    answer: "C",
-                    explanation: "Berdasarkan sifat perpangkatan, a^m \u00d7 a^n = a^(m+n). Jadi, 2^3 \u00d7 2^2 = 2^(3+2) = 2^5 = 32."
+                    text: "Berapakah hasil dari ((2^4 * 2^3) : 2^5)?",
+                    options: ["2", "4", "8", "16"],
+                    answer: "B",
+                    explanation: "Menggunakan sifat perpangkatan: (2^4 * 2^3) : 2^5 = 2^(4+3) : 2^5 = 2^7 : 2^5 = 2^(7-5) = 2^2 = 4."
                 },
                 {
                     id: "q-m9-2",
                     category: "Latihan",
                     subject: "Matematika Kelas 9",
-                    type: "BS",
-                    text: "Persamaan kuadrat x^2 - 9 = 0 memiliki dua akar real yaitu x = 3 dan x = -3.",
-                    options: ["Benar", "Salah"],
-                    answer: "A",
-                    explanation: "x^2 - 9 = 0 \u21d2 x^2 = 9 \u21d2 x = \u00b1\u221a9 \u21d2 x = 3 atau x = -3. Pernyataan tersebut BENAR."
+                    type: "PG",
+                    text: "Sederhanakan bentuk akar berikut: √48 + 2√27 - √12.",
+                    options: ["6√3", "8√3", "10√3", "12√3"],
+                    answer: "B",
+                    explanation: "√48 = 4√3, 2√27 = 2 * 3√3 = 6√3, √12 = 2√3. Maka: 4√3 + 6√3 - 2√3 = 8√3."
                 },
                 {
                     id: "q-m9-3",
                     category: "Latihan",
                     subject: "Matematika Kelas 9",
-                    type: "IS",
-                    text: "Berapakah volume tabung (dalam cm3) jika jari-jari alasnya 7 cm and tingginya 10 cm? (Gunakan pi = 22/7)",
-                    options: [],
-                    answer: "1540",
-                    explanation: "Volume tabung = pi \u00d7 r^2 \u00d7 t = (22/7) \u00d7 7 \u00d7 7 \u00d7 10 = 22 \u00d7 7 \u00d7 10 = 154 \u00d7 10 = 1540 cm3."
+                    type: "PG",
+                    text: "Jika akar-akar persamaan kuadrat x^2 - 7x + 10 = 0 adalah x1 dan x2, tentukan nilai dari x1 + x2.",
+                    options: ["-7", "-10", "7", "10"],
+                    answer: "C",
+                    explanation: "Pada persamaan ax^2 + bx + c = 0, jumlah akar-akar x1 + x2 = -b/a. Untuk x^2 - 7x + 10 = 0, a=1, b=-7. Maka x1 + x2 = -(-7)/1 = 7."
                 },
                 {
                     id: "q-m9-4",
-                    category: "TryOut",
-                    subject: "Ulangan Harian Matematika Kelas 9",
+                    category: "Latihan",
+                    subject: "Matematika Kelas 9",
                     type: "PG",
-                    text: "Bentuk sederhana dari akar kuadrat \u221a72 adalah...",
-                    options: ["3\u221a8", "6\u221a2", "2\u221a18", "4\u221a3"],
-                    answer: "B",
-                    explanation: "\u221a72 = \u221a(36 \u00d7 2) = \u221a36 \u00d7 \u221a2 = 6\u221a2."
+                    text: "Titik potong grafik fungsi kuadrat y = x^2 - 4x - 5 dengan sumbu Y adalah...",
+                    options: ["(0, -5)", "(0, 5)", "(-5, 0)", "(5, 0)"],
+                    answer: "A",
+                    explanation: "Grafik memotong sumbu Y ketika x = 0. Substitusikan x = 0 ke fungsi: y = 0^2 - 4(0) - 5 = -5. Koordinatnya adalah (0, -5)."
                 },
                 {
                     id: "q-m9-5",
+                    category: "Latihan",
+                    subject: "Matematika Kelas 9",
+                    type: "BS",
+                    text: "Grafik fungsi kuadrat f(x) = -x^2 + 6x - 9 memiliki kurva yang terbuka ke atas.",
+                    options: ["Benar", "Salah"],
+                    answer: "B",
+                    explanation: "Karena koefisien a dari x^2 bernilai negatif (a = -1 < 0), kurva terbuka ke bawah (memiliki titik balik maksimum), bukan ke atas."
+                },
+                {
+                    id: "q-m9-6",
+                    category: "Latihan",
+                    subject: "Matematika Kelas 9",
+                    type: "PG",
+                    text: "Titik A(3, -5) ditranslasikan oleh T(2, 4). Koordinat bayangan titik A adalah...",
+                    options: ["A'(5, -1)", "A'(5, -9)", "A'(1, -1)", "A'(1, -9)"],
+                    answer: "A",
+                    explanation: "Bayangan hasil translasi: A'(x+a, y+b) = A'(3+2, -5+4) = A'(5, -1)."
+                },
+                {
+                    id: "q-m9-7",
+                    category: "Latihan",
+                    subject: "Matematika Kelas 9",
+                    type: "PG",
+                    text: "Jika titik P(-4, 2) dicerminkan (refleksi) terhadap garis y = x, koordinat bayangannya adalah...",
+                    options: ["P'(-4, -2)", "P'(4, 2)", "P'(2, -4)", "P'(-2, 4)"],
+                    answer: "C",
+                    explanation: "Rumus refleksi terhadap garis y = x adalah (x, y) menjadi (y, x). Jadi, bayangan dari P(-4, 2) adalah P'(2, -4)."
+                },
+                {
+                    id: "q-m9-8",
+                    category: "Latihan",
+                    subject: "Matematika Kelas 9",
+                    type: "IS",
+                    text: "Sebuah titik B(2, 3) didilatasikan dengan pusat O(0,0) dan faktor skala k = -3. Berapakah koordinat sumbu X dari bayangan titik B tersebut?",
+                    options: [],
+                    answer: "-6",
+                    explanation: "Dilatasi dengan pusat O(0,0) rumusnya B'(kx, ky). Dengan k = -3, maka B'(-3 * 2, -3 * 3) = B'(-6, -9). Koordinat X adalah -6."
+                },
+                {
+                    id: "q-m9-9",
+                    category: "Latihan",
+                    subject: "Matematika Kelas 9",
+                    type: "PG",
+                    text: "Sebuah foto ditempelkan pada karton 30 cm x 40 cm. Sisa karton sebelah kiri, kanan, atas adalah 3 cm. Jika foto dan karton sebangun, sisa karton bagian bawah adalah...",
+                    options: ["3 cm", "4 cm", "5 cm", "6 cm"],
+                    answer: "C",
+                    explanation: "Lebar foto = 30 - 3 - 3 = 24. Karena sebangun: Lebar Foto / Lebar Karton = Tinggi Foto / Tinggi Karton => 24/30 = Tinggi Foto/40 => Tinggi Foto = 32 cm. Sisa karton bawah = 40 - 32 - 3 = 5 cm."
+                },
+                {
+                    id: "q-m9-10",
+                    category: "Latihan",
+                    subject: "Matematika Kelas 9",
+                    type: "BS",
+                    text: "Dua buah persegi panjang dengan ukuran berbeda selalu sebangun.",
+                    options: ["Benar", "Salah"],
+                    answer: "B",
+                    explanation: "Dua persegi panjang belum tentu sebangun karena perbandingan sisi-sisi bersesuaian belum tentu senilai. Contoh: ukuran 2x3 tidak sebangun dengan 2x4."
+                },
+                {
+                    id: "q-m9-11",
+                    category: "Latihan",
+                    subject: "Matematika Kelas 9",
+                    type: "PG",
+                    text: "Berapakah luas permukaan sebuah bola (dalam cm2) yang memiliki jari-jari 10 cm? (Gunakan pi = 3.14)",
+                    options: ["314", "628", "1256", "3140"],
+                    answer: "C",
+                    explanation: "Luas Permukaan Bola = 4 * pi * r^2 = 4 * 3.14 * 10^2 = 4 * 314 = 1256 cm2."
+                },
+                {
+                    id: "q-m9-12",
+                    category: "Latihan",
+                    subject: "Matematika Kelas 9",
+                    type: "IS",
+                    text: "Sebuah kerucut memiliki jari-jari alas 6 cm dan tinggi 8 cm. Berapakah panjang garis pelukis (s) kerucut tersebut dalam cm?",
+                    options: [],
+                    answer: "10",
+                    explanation: "Panjang garis pelukis s = √(r^2 + t^2) = √(6^2 + 8^2) = √(36 + 64) = √100 = 10 cm."
+                },
+                {
+                    id: "q-m9-13",
+                    category: "Latihan",
+                    subject: "Matematika Kelas 9",
+                    type: "PG",
+                    text: "Data nilai matematika sekelompok siswa: 7, 8, 6, 8, 9, 7, 8, 9. Rata-rata (mean) dari data tersebut adalah...",
+                    options: ["7.50", "7.75", "8.00", "8.25"],
+                    answer: "B",
+                    explanation: "Jumlah data = 7+8+6+8+9+7+8+9 = 62. Banyak data = 8. Rata-rata = 62 / 8 = 7.75."
+                },
+                {
+                    id: "q-m9-14",
+                    category: "Latihan",
+                    subject: "Matematika Kelas 9",
+                    type: "PG",
+                    text: "Dua dadu dilambungkan bersama satu kali. Peluang munculnya mata dadu berjumlah 8 adalah...",
+                    options: ["3/36", "4/36", "5/36", "6/36"],
+                    answer: "C",
+                    explanation: "Semesta n(S) = 36. Kejadian berjumlah 8: {(2,6), (3,5), (4,4), (5,3), (6,2)} => n(A) = 5. Peluang = 5/36."
+                },
+                {
+                    id: "q-m9-15",
+                    category: "Latihan",
+                    subject: "Matematika Kelas 9",
+                    type: "BS",
+                    text: "Median dari data terurut: 4, 5, 5, 6, 7, 8, 9 adalah 6.",
+                    options: ["Benar", "Salah"],
+                    answer: "A",
+                    explanation: "Data terurut memiliki banyak data ganjil (n=7). Nilai tengah berada pada data ke-4, yaitu 6. Pernyataan tersebut BENAR."
+                },
+                
+                // === ULANGAN HARIAN TIMED EXAMS (5 SOAL) ===
+                {
+                    id: "q-m9-to1",
+                    category: "TryOut",
+                    subject: "Ulangan Harian Matematika Kelas 9",
+                    type: "PG",
+                    text: "Bentuk sederhana dari akar kuadrat √72 adalah...",
+                    options: ["3√8", "6√2", "2√18", "4√3"],
+                    answer: "B",
+                    explanation: "√72 = √(36 \u00d7 2) = √36 \u00d7 √2 = 6√2."
+                },
+                {
+                    id: "q-m9-to2",
                     category: "TryOut",
                     subject: "Ulangan Harian Matematika Kelas 9",
                     type: "PG",
@@ -275,7 +398,7 @@ function initDatabase() {
                     explanation: "Faktorkan persamaan: x^2 - 5x + 6 = (x - 2)(x - 3) = 0. Jadi, x = 2 atau x = 3."
                 },
                 {
-                    id: "q-m9-6",
+                    id: "q-m9-to3",
                     category: "TryOut",
                     subject: "Ulangan Harian Matematika Kelas 9",
                     type: "PG",
@@ -290,17 +413,17 @@ function initDatabase() {
                     explanation: "Dua bangun dikatakan kongruen jika memiliki bentuk dan ukuran yang sama. Syaratnya adalah sisi bersesuaian sama panjang dan sudut bersesuaian sama besar."
                 },
                 {
-                    id: "q-m9-7",
+                    id: "q-m9-to4",
                     category: "TryOut",
                     subject: "Ulangan Harian Matematika Kelas 9",
                     type: "PG",
-                    text: "Apakah rumus luas selimut kerucut adalah L = pi \u00d7 r \u00d7 s?",
+                    text: "Apakah rumus luas selimut kerucut adalah L = pi × r × s?",
                     options: ["Benar", "Salah"],
                     answer: "A",
-                    explanation: "Luas selimut kerucut dirumuskan dengan L = pi \u00d7 r \u00d7 s, di mana r adalah jari-jari alas dan s adalah garis pelukis kerucut."
+                    explanation: "Luas selimut kerucut dirumuskan dengan L = pi × r × s, di mana r adalah jari-jari alas dan s adalah garis pelukis kerucut."
                 },
                 {
-                    id: "q-m9-8",
+                    id: "q-m9-to5",
                     category: "TryOut",
                     subject: "Ulangan Harian Matematika Kelas 9",
                     type: "IS",
@@ -327,7 +450,7 @@ function initDatabase() {
 }
 
 function saveDatabase() {
-    localStorage.setItem("bimbel_avatar_db_v3", JSON.stringify(db));
+    localStorage.setItem("bimbel_avatar_db_v4", JSON.stringify(db));
 }
 
 
